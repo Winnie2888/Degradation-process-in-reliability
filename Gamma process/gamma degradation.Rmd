@@ -585,7 +585,7 @@ $$
 
 ### 4.4 案例分析
 
-
+炭膜电阻器 carbon-film resistors和激光器件 Laser 数据集也常应用在Gamma过程中，具体数据在3.3中已给出。
 
 #### 4.4.1 wear data
 > 数据来自： Ye Z.S., et al. (2014). "Semiparametric Estimation of Gamma Processes for Deteriorating Products" Technometrics 
@@ -644,20 +644,19 @@ Lithium-ion batteries are widely used in many applications and consumer products
 ```{r}
 li_dat = read.csv("dataset/Lithium-ion batteries.csv")
 knitr::kable(head(li_dat))
-# ti_dat$Unit = as.factor(li_dat$Unit)
+li_dat$cell = as.factor(li_dat$cell)
 ```
 
 
 ```{r}
-li_dat %>% ggplot(aes(cycles,Cell.1,Cell.2,Cell.3,Cell.4)) +
-  geom_line(aes(cycles,Cell.1),size = 0.1) +        geom_line(aes(cycles,Cell.2),size = 0.1) + 
-    geom_line(aes(cycles,Cell.3),size = 0.1) +   geom_line(aes(cycles,Cell.4),size = 0.1) + 
+li_dat %>% ggplot(aes(cycles,ah,color = cell)) +
+  geom_line(size = 0.1) + 
   geom_point(size = 0.8) + 
   theme_bw() +
   theme(panel.grid.major = element_blank()) +
   scale_color_viridis(discrete = T) +
   theme(legend.position = 'none') +
-  labs(x = "time", y = "crack length")
+  labs(x = "cycles", y = "capacities")
 ```
 
 
