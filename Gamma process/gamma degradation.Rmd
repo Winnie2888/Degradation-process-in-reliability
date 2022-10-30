@@ -34,6 +34,12 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 ## 退化轨道模型
 
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(viridis)
+library(dplyr)
+```
 
 ## 4. Gamma退化过程模型
 
@@ -94,12 +100,7 @@ $$
 \end{aligned}
 $$ 这与将失效阈值由 $\ell$ 变为 $\ell-{x_s}$ 、时间 $t$ 变为 $t-s$ 情形的寿命分布是一样的. 因此，在给定当前状态情况下，可以按照类似的途径更新剩余寿命.
 
-```{r}
-library(ggplot2)
-library(tidyverse)
-library(viridis)
-library(dplyr)
-```
+
 
 #### 4.1.1 数据模拟产生
 
@@ -692,7 +693,35 @@ fatigue_dat %>% ggplot(aes(cycles,crack,color = path)) +
 
 
 
+#### 4.4.5 Device-B data
+> 数据来自Meeker, W. Q. (1998). Statistical Methods for Reliability Data
+
+These data came from an accelerated repeated measured degradation test of a
+solid-state RF power amplifier and were first used in Meeker, Escobar, and Lu
+(1998). 
 
 
 
+```{r}
+DeviceB_dat = read.csv("dataset/DeviceB.csv")
+knitr::kable(head(DeviceB_dat))
+DeviceB_dat$Device_Number = as.factor(DeviceB_dat$Device_Number)
+```
+
+
+
+
+
+
+
+```{r}
+DeviceB_dat %>% ggplot(aes(hours,db,color = Device_Number)) +
+  geom_line(size = 0.1) + 
+  geom_point(size = 0.8) + 
+  theme_bw() +
+  theme(panel.grid.major = element_blank()) +
+  scale_color_viridis(discrete = T) +
+  theme(legend.position = 'none') +
+  labs(x = "hours", y = "Power Drop (dB)")
+```
 
